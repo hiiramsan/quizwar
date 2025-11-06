@@ -1,9 +1,9 @@
-const { createServer } = require('http');
-const { Server } = require('socket.io');
-const PORT = process.env.PORT || 3000;
+import { createServer } from 'http';
+import { Server } from 'socket.io';
+import { app } from './src/app.js';
+import registerSocketHandlers from './src/sockets/index.js';
 
-const { app } = require('./src/app');
-const registerSocketHandlers = require('./src/sockets');
+const PORT = process.env.PORT || 3000;
 
 const server = createServer(app);
 const io = new Server(server, {
