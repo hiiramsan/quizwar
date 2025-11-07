@@ -16,14 +16,11 @@ function registerRoomHandlers(io, socket) {
         if (isHost) {
             room.hostSocketId = socket.id;
             room.meta.hostName = name || room.meta.hostName;
-        }
-
-        if (!isAlreadyJoined) {
+        } else if(!isHost && !isAlreadyJoined) {
             game.players.push({
                 socketId: socket.id,
                 name: name,
                 joinedAt: Date.now(),
-                isHost: !isHost
             });
         }
 
@@ -37,15 +34,14 @@ function registerRoomHandlers(io, socket) {
 
         socket.join(roomCode);
 
-        const playersList = game.players.map(p => ({ name: p.name, isHost: p.isHost }));
+        const playersList = game.players.map(p => ({ name: p.name }));
         socket.emit('joinedRoom', { roomCode, players: playersList });
         io.to(roomCode).emit('roomUpdated', {
             roomCode,
-            players: playersList
+            players: playersList,
         });
 
         console.log(`socket ${socket.id} joined ${roomCode} as ${isHost}.`);
-
     });
 
     socket.on('leaveRoom', async ({ roomCode }) => {

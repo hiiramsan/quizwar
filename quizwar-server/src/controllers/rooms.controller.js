@@ -3,6 +3,7 @@ import { makeRoomCode } from "../utils/makeRoomCode.js";
 
 export const createRoom = async (req, res) => {
     const { hostName } = req.body || {};
+    console.log(`receiving ${hostName} as host`);
     let code = makeRoomCode();
     const roomObj = {
         hostSocketId: null,

@@ -35,13 +35,13 @@ function App() {
   const handleEnterCode = async () => {
     if(!roomCode) return alert("Enter a code!");
     try {
-      await axios.get(`${SERVER_URL}/rooms/${roomCode}`);
+      await axios.get(`${SERVER_URL}/api/rooms/${roomCode}`);
       setPhase("enterName");
     } catch (error) {
       alert("Room not found")
     }
   }
-
+  
   const handleCreateRoom = async () => {
     if (!name) return alert("Enter your name first");
     const res = await axios.post(`${SERVER_URL}/create-room`, { hostName: name });
